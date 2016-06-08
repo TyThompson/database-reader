@@ -4,6 +4,8 @@
 # Asks the user for a quantity
 # Creates a new order for that user / item / quantity
 
-
-get_name
-display_items
+until purchase_another? false
+  get_name
+  pick_item
+  purchase_another?
+end
