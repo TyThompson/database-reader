@@ -1,8 +1,4 @@
 class Item < ActiveRecord::Base
-  belongs_to :purchase
-
-  # def price
-  #   super to_f
-  # end
-
+  has_many :purchases
+  has many :users, through: :purchases
 end
