@@ -18,7 +18,7 @@ end
 def display_items item_list
   puts "Here is a list of our items:"
   item_list.each do |id, description, price, category|
-    puts "#{id}) #{description}: $#{price.to_f}, ( #{category} )"
+    puts "#{id.to_s.rjust 3}) #{description.ljust 27} $#{price.to_f.to_s.rjust 5} #{category.rjust 25}"
   end
 end
 
