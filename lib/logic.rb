@@ -1,9 +1,14 @@
+require "./db/setup"
+require "./lib/all"
+
 def get_name
   puts "What is your first name?"
   first_name = gets.chomp.capitalize
   puts "#{first_name}, What is your last name?"
   last_name = gets.chomp.capitalize
-  User.where(first_name: first_name, last_name: last_name).first_or_create!
+  user_object = User.where(first_name: first_name, last_name: last_name).first_or_create!
+  user_id = user_object.id
+  return user_id
 end
 
 def item_list
@@ -17,21 +22,21 @@ def display_items item_list
   end
 end
 
-def pick_item
+def pick_item user_id
   puts "Which item id# would like to purchase? Type 1 to view id#) list."
   pick_id = gets.chomp.to_i
   buy_item = Item.where(id: pick_id).pluck(:description, :price)[0]
-  if pick_id == 1 || buy_item == nil
+  if buy_item == nil
     display_items item_list
-    pick_item
+    pick_item user_id
   else
     description = buy_item[0]
     price = buy_item[1]
-    puts "How many of id# #{pick_id}) #{description} #{price.to_f} would you like to purchase?"
+    puts "How many of id# #{pick_id}) #{description} $#{number_to_currency(price.round(2).to_f)} would you like to purchase?"
     quantity = gets.chomp.to_i
     total = quantity * price.to_f
-    puts "Purchasing #{quantity} #{description} for #{total.to_f}."
-    hit_the_red_button = Purchase.create(user_id: user.id, item_id: pick_id, quantity: quantity)
+    puts "Purchasing #{quantity} #{description} for $#{total.round(2).to_f}."
+    hit_the_red_button = Purchase.create(user_id: user_id, item_id: pick_id, quantity: quantity)
   end
 end
 
