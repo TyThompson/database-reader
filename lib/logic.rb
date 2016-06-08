@@ -32,7 +32,7 @@ def pick_item user_id
   else
     description = buy_item[0]
     price = buy_item[1]
-    puts "How many of id# #{pick_id}) #{description} $#{number_to_currency(price.round(2).to_f)} would you like to purchase?"
+    puts "How many of id# #{pick_id}) #{description} $#{price.round(2).to_f} would you like to purchase?"
     quantity = gets.chomp.to_i
     total = quantity * price.to_f
     puts "Purchasing #{quantity} #{description} for $#{total.round(2).to_f}."
